@@ -28,8 +28,10 @@ STEP 1 – Label. Call list_labels and get the id of the label "Recruiters"
 STEP 2 – Find candidates. search_threads with query
   newer_than:8d -in:sent -in:drafts -in:chats
 and page through ALL results (pageSize 50, follow nextPageToken). Also search
-  label:<Recruiters label id> newer_than:8d
-for follow-ups in threads that were already labelled. Previews only show the
+  label:Recruiters newer_than:8d
+for follow-ups in threads that were already labelled. Search by the label
+NAME: in testing, a search using the label ID (label:Label_1) returned nothing.
+Use the label ID only for label_thread. Previews only show the
 oldest messages, so call get_thread (messageFormat PLAIN_TEXT) on every thread
 you might count.
 

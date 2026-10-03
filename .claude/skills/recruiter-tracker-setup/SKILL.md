@@ -39,9 +39,11 @@ and sheet-writing decision.
 
 ## Step 2 – Backfill: start with two
 
-1. Find the `Recruiters` label ID with `list_labels`.
-2. List every thread with `search_threads` using `label:<id>`, paging through
-   all pages. There should be about 366.
+1. Find the `Recruiters` label ID with `list_labels`. You need the ID for
+   `label_thread`.
+2. List every thread with `search_threads` using `label:Recruiters`, paging
+   through all pages. There should be about 366. Search by the label **name**:
+   in testing, `label:<id>` (e.g. `label:Label_1`) returned nothing.
 3. Sort the threads **oldest first**.
 4. Build rows for the **two oldest threads only**, using the `recruiter-row`
    algorithm (`get_thread`, `messageFormat: PLAIN_TEXT`), and append them.
