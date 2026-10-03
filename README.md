@@ -22,7 +22,7 @@ from the user:
 | 1 · Workflow saved as a skill | [`.claude/skills/recruiter-row/SKILL.md`](.claude/skills/recruiter-row/SKILL.md): counting rules, row format, append-only writing | Done |
 | 2 · Labelling recruiter mail | The user chose to have Claude apply the Gmail label **`Recruiters`** itself (no n8n). The label exists and covers the full history: 366 threads from 152 named recruiters at 40 firms, 2017–2026 | Done |
 | 3 · Backfill of old emails | [`.claude/skills/recruiter-tracker-setup/SKILL.md`](.claude/skills/recruiter-tracker-setup/SKILL.md): reads `label:Recruiters` into the sheet, starting with two rows | Needs a session with the Google Sheets connector |
-| 4 · Weekly Routine | [`routine/saturday-routine-prompt.md`](routine/saturday-routine-prompt.md), cron `CRON_TZ=Asia/Riyadh 20 15 * * 6`, a fresh session each run | Created by the setup skill, in the same session as Step 3 |
+| 4 · Weekly Routine | [`routine/saturday-routine-prompt.md`](routine/saturday-routine-prompt.md), cron `CRON_TZ=Asia/Riyadh 20 15 * * 6`, a fresh session each run | You create it in the claude.ai Routines UI (see below) |
 
 ## Finishing the setup (one-time)
 
@@ -37,7 +37,17 @@ The setup skill does the rest:
 - checks the sheet
 - writes two rows for you to check
 - after you say continue, backfills the rest
-- creates the Saturday Routine
+
+**You create the Saturday Routine yourself.** On this account, Claude cannot
+attach connectors to a Routine it creates, so a Routine made by Claude would
+run without Gmail or Sheets. In the claude.ai Routines UI, create a Routine
+with these settings:
+
+- **Schedule:** Saturdays at 15:20, time zone Asia/Riyadh.
+- **Session:** a fresh session on each run.
+- **Connectors:** Gmail and Google Sheets.
+- **Prompt:** the text block in `routine/saturday-routine-prompt.md`, with
+  `<SHEET_URL>` replaced by your sheet link.
 
 ## Screening decisions you may want to change
 
@@ -70,5 +80,5 @@ to change any of them.
 
 This repository is **public**. The sheet link, the Gmail address and all
 recruiter names are kept out of it on purpose. The sheet link lives only in
-the Routine's stored prompt. Keep the sheet itself private: it holds other
+the Routine's stored prompt and in your own copy of it. Keep the sheet itself private: it holds other
 people's names and contact details.

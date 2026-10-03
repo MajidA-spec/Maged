@@ -80,6 +80,14 @@ Call `create_trigger` (claude-code-remote) with:
 
 - If the result warns that connectors were not stored, say so plainly and pass
   on the remedy it names.
+- **Known result for this account (2026-10-03):** `create_trigger` rejected the
+  `connectors` parameter ("not available for this organization"). Without it,
+  the Routine was created with **no** connectors, so each run would have had
+  no Gmail or Sheets tools; it was deleted. For this account, the user must
+  create the Routine in the claude.ai Routines UI instead, selecting the Gmail
+  and Google Sheets connectors there. Give the user the filled-in prompt to
+  paste, plus the schedule (Saturdays 15:20, Asia/Riyadh) and the setting for
+  a fresh session on each run.
 - Offer one test run with `fire_trigger`. **Ask first**, because it writes to
   the sheet.
 - Tell the user they can watch the first run in Claude Code on the web.
