@@ -11,7 +11,7 @@ from the user:
 
 1. **LinkedIn, Indeed, or any email not from a specific named person is not a
    recruiter.**
-2. **The routine runs every Saturday at 3:20 PM (Asia/Riyadh).**
+2. **The routine runs every Saturday at 5:25 PM (Asia/Riyadh), changed from 3:20 PM at the user's request.**
 3. **Never delete any line items.** The sheet is append-only, and every
    recruiter contact is collected.
 
@@ -21,8 +21,8 @@ from the user:
 |---|---|---|
 | 1 · Workflow saved as a skill | [`.claude/skills/recruiter-row/SKILL.md`](.claude/skills/recruiter-row/SKILL.md): counting rules, row format, append-only writing | Done |
 | 2 · Labelling recruiter mail | The user chose to have Claude apply the Gmail label **`Recruiters`** itself (no n8n). The label exists and covers the full history: 366 threads from 152 named recruiters at 40 firms, 2017–2026 | Done |
-| 3 · Backfill of old emails | [`.claude/skills/recruiter-tracker-setup/SKILL.md`](.claude/skills/recruiter-tracker-setup/SKILL.md): reads `label:Recruiters` into the sheet, starting with two rows | Needs a session with the Google Sheets connector |
-| 4 · Weekly Routine | [`routine/saturday-routine-prompt.md`](routine/saturday-routine-prompt.md), cron `CRON_TZ=Asia/Riyadh 20 15 * * 6`, a fresh session each run | You create it in the claude.ai Routines UI (see below) |
+| 3 · Backfill of old emails | [`.claude/skills/recruiter-tracker-setup/SKILL.md`](.claude/skills/recruiter-tracker-setup/SKILL.md): reads `label:Recruiters` into the sheet, starting with two rows | Run on 2026-10-03 with parallel agents |
+| 4 · Weekly Routine | [`routine/saturday-routine-prompt.md`](routine/saturday-routine-prompt.md), cron `CRON_TZ=Asia/Riyadh 25 17 * * 6`. It fires into the setup session, which holds the Gmail and Google Sheets connectors | Created 2026-10-03 |
 
 ## Finishing the setup (one-time)
 
@@ -38,12 +38,16 @@ The setup skill does the rest:
 - writes two rows for you to check
 - after you say continue, backfills the rest
 
-**You create the Saturday Routine yourself.** On this account, Claude cannot
-attach connectors to a Routine it creates, so a Routine made by Claude would
-run without Gmail or Sheets. In the claude.ai Routines UI, create a Routine
-with these settings:
+**The Saturday Routine** (17:25, Asia/Riyadh) fires back into the setup
+session, because that session holds the Gmail and Google Sheets connectors.
+On this account, Claude cannot attach connectors to a Routine that starts a
+fresh session each run. **Do not archive the setup session**, or the Routine
+stops working.
 
-- **Schedule:** Saturdays at 15:20, time zone Asia/Riyadh.
+If you ever want a fresh session per run instead, create the Routine yourself
+in the claude.ai Routines UI with these settings:
+
+- **Schedule:** Saturdays at 17:25, time zone Asia/Riyadh.
 - **Session:** a fresh session on each run.
 - **Connectors:** Gmail and Google Sheets.
 - **Prompt:** the text block in `routine/saturday-routine-prompt.md`, with

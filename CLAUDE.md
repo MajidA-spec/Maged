@@ -7,7 +7,7 @@ application code, only skills and a Routine prompt. See `README.md`.
   how a row is built and appended. It is the single source of truth for those
   rules.
 - `.claude/skills/recruiter-tracker-setup/` holds the one-time steps: the
-  backfill into the Google Sheet, then creating the Saturday 15:20 Riyadh
+  backfill into the Google Sheet, then creating the Saturday 17:25 Riyadh
   Routine.
 - `routine/saturday-routine-prompt.md` is the standalone prompt each weekly
   run receives. Keep it in step with `recruiter-row`.

@@ -1,6 +1,6 @@
 ---
 name: recruiter-tracker-setup
-description: One-time finishing steps for the Gmail → Google Sheets recruiter tracker, for a session that has BOTH the Gmail and Google Sheets connectors. It checks the sheet, backfills every thread already labelled "Recruiters" into the sheet (starting with two rows for the user to check), and then creates the weekly Routine for Saturdays at 15:20 Asia/Riyadh. Use when the user says "finish / set up the recruiter tracker", "run the recruiter backfill" or "create the recruiter routine".
+description: One-time finishing steps for the Gmail → Google Sheets recruiter tracker, for a session that has BOTH the Gmail and Google Sheets connectors. It checks the sheet, backfills every thread already labelled "Recruiters" into the sheet (starting with two rows for the user to check), and then creates the weekly Routine for Saturdays at 17:25 Asia/Riyadh. Use when the user says "finish / set up the recruiter tracker", "run the recruiter backfill" or "create the recruiter routine".
 ---
 
 # recruiter-tracker-setup
@@ -67,27 +67,38 @@ and sheet-writing decision.
 
 ## Step 4 – Create the weekly Routine
 
-Call `create_trigger` (claude-code-remote) with:
+The schedule is **Saturdays 17:25 Asia/Riyadh**. The user moved it from 15:20
+on 2026-10-03.
+
+**What worked on this account (2026-10-03).** A **session-bound** Routine:
+call `create_trigger` **without** `connectors` and **without**
+`create_new_session_on_fire`, so every run fires back into the setup session,
+which already holds the Gmail and Google Sheets connectors.
 
 | Field | Value |
 |---|---|
-| `name` | `Recruiter tracker — Saturdays 15:20 Riyadh` |
-| `cron_expression` | `CRON_TZ=Asia/Riyadh 20 15 * * 6` |
-| `create_new_session_on_fire` | `true` |
-| `connectors` | `["Gmail", "Google Sheets"]` |
+| `name` | `Recruiter tracker — Saturdays 17:25 Riyadh` |
+| `cron_expression` | `CRON_TZ=Asia/Riyadh 25 17 * * 6` |
 | `initiation` | `human_request` |
 | `prompt` | The text block in `routine/saturday-routine-prompt.md`, with `<SHEET_URL>` replaced by the real link |
 
-- If the result warns that connectors were not stored, say so plainly and pass
-  on the remedy it names.
-- **Known result for this account (2026-10-03):** `create_trigger` rejected the
-  `connectors` parameter ("not available for this organization"). Without it,
-  the Routine was created with **no** connectors, so each run would have had
-  no Gmail or Sheets tools; it was deleted. For this account, the user must
-  create the Routine in the claude.ai Routines UI instead, selecting the Gmail
-  and Google Sheets connectors there. Give the user the filled-in prompt to
-  paste, plus the schedule (Saturdays 15:20, Asia/Riyadh) and the setting for
-  a fresh session on each run.
+Result: trigger `trig_01Kua3bHVp1c5LijdfvaRfaA`, `persist_session: true`, and
+no connector warning. If that session is ever archived, the Routine stops
+working and must be recreated from a new session that holds both
+connectors.
+
+**What did not work.** A fresh session per run
+(`create_new_session_on_fire: true`).
+
+- `create_trigger` rejected the `connectors` parameter ("not available for
+  this organization").
+- Without that parameter, the Routine stored **no** connectors, so each run
+  would have had no Gmail or Sheets tools. It was deleted.
+- If a fresh-session Routine is ever wanted, the user must create it in the
+  claude.ai Routines UI and select the connectors there.
+
+If any result warns that connectors were not stored, say so plainly and pass
+on the remedy it names.
 - Offer one test run with `fire_trigger`. **Ask first**, because it writes to
   the sheet.
 - Tell the user they can watch the first run in Claude Code on the web.

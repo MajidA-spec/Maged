@@ -1,8 +1,16 @@
 # Saturday routine prompt
 
-This is the exact text the weekly Routine sends to a **fresh** Claude Code
-session every **Saturday at 15:20 Asia/Riyadh**. A fresh session may not have
-this repository's skills loaded, so the prompt carries the full rules.
+This is the text the weekly Routine sends every **Saturday at 17:25
+Asia/Riyadh**. The live Routine fires into the setup session, which holds the
+Gmail and Google Sheets connectors. That session's context may have been
+compacted, and a fresh session would not have this repository's skills
+loaded, so the prompt carries the full rules either way.
+
+The live copy adds two lines at the top:
+
+- "If the recruiter-row skill is available, follow it."
+- "If the Gmail or Google Sheets tools are not available in this session, do
+  nothing else: report exactly which tools are missing."
 
 `<SHEET_URL>` is a placeholder. The setup session swaps in the real Google
 Sheet link when it creates the Routine. The link is kept out of this public
