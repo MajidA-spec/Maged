@@ -11,7 +11,10 @@ Earlier work already in place (session of 2026-10-03):
   thread in the inbox's full history that passes the `recruiter-row` rules:
   366 threads (449 messages), 2017 to 2026. LinkedIn, Indeed, job boards and
   generic mailboxes were excluded.
-- **The sheet is still empty.** That session had no Google Sheets connector.
+- **The backfill is done** (2026-10-03): 2 test rows plus 363 backfilled
+  rows, oldest first. One labelled thread was skipped (a GDPR notice with no
+  role). Running the steps again is safe: threads already in the sheet are
+  skipped.
 
 Load and follow the **`recruiter-row`** skill for every counting, row-building
 and sheet-writing decision.

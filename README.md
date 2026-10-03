@@ -21,7 +21,7 @@ from the user:
 |---|---|---|
 | 1 · Workflow saved as a skill | [`.claude/skills/recruiter-row/SKILL.md`](.claude/skills/recruiter-row/SKILL.md): counting rules, row format, append-only writing | Done |
 | 2 · Labelling recruiter mail | The user chose to have Claude apply the Gmail label **`Recruiters`** itself (no n8n). The label exists and covers the full history: 366 threads from 152 named recruiters at 40 firms, 2017–2026 | Done |
-| 3 · Backfill of old emails | [`.claude/skills/recruiter-tracker-setup/SKILL.md`](.claude/skills/recruiter-tracker-setup/SKILL.md): reads `label:Recruiters` into the sheet, starting with two rows | Run on 2026-10-03 with parallel agents |
+| 3 · Backfill of old emails | [`.claude/skills/recruiter-tracker-setup/SKILL.md`](.claude/skills/recruiter-tracker-setup/SKILL.md): reads `label:Recruiters` into the sheet, starting with two rows | Done 2026-10-03: 365 rows (2 test rows + 363 backfilled), 1 thread skipped as a GDPR notice |
 | 4 · Weekly Routine | [`routine/saturday-routine-prompt.md`](routine/saturday-routine-prompt.md), cron `CRON_TZ=Asia/Riyadh 25 17 * * 6`. It fires into the setup session, which holds the Gmail and Google Sheets connectors | Created 2026-10-03 |
 
 ## Finishing the setup (one-time)
@@ -77,8 +77,9 @@ to change any of them.
   - connect that account instead
 - **Attachments.** If a salary appears only in a PDF the connector cannot
   read, the row says `See attachment`.
-- **Untested Routine.** A Routine using the Gmail and Google Sheets connectors
-  has not run yet. Watch the first Saturday run.
+- **Session-bound Routine.** The first run (Saturday 2026-10-03, 17:25) had
+  Gmail and Sheets access and found no new recruiter emails. It only keeps
+  working while the setup session exists, so do not archive that session.
 
 ## Privacy
 
